@@ -1,5 +1,9 @@
-use rustc_lint::LateLintPass;
+use clippy_utils::diagnostics::span_lint;
+use if_chain::if_chain;
+use rustc_hir::{Impl, Item, ItemKind};
+use rustc_lint::{LateContext, LateLintPass};
 use rustc_session::{declare_lint, declare_lint_pass};
+use rustc_span::sym;
 
 declare_lint! {
     /// **What it does:**
@@ -24,7 +28,18 @@ declare_lint! {
 
 declare_lint_pass!(NonDynamicErrors => [NON_DYNAMIC_ERRORS]);
 
-impl<'hir> LateLintPass<'hir> for NonDynamicErrors {
-    // A list of things you might check can be found here:
-    // https://doc.rust-lang.org/stable/nightly-rustc/rustc_lint/trait.LateLintPass.html
+impl<'tcx> LateLintPass<'tcx> for NonDynamicErrors {
+    fn check_item(&mut self, cx: &LateContext<'tcx>, item: &'tcx Item<'tcx>) {
+        if_chain! {
+            if let ItemKind::Impl(Impl {
+                of_trait: Some(ref trait_ref),
+                ..
+            }) = item.kind;
+            if let Some(trait_id) = trait_ref.trait_def_id();
+            if cx.tcx.is_diagnostic_item(sym::Error, trait_id);
+            then {
+                span_lint(cx, NON_DYNAMIC_ERRORS, item.span, "test");
+            }
+        }
+    }
 }

@@ -1,5 +1,5 @@
 #![feature(rustc_private)]
-#![warn(unused_extern_crates)]
+// #![warn(unused_extern_crates)]
 
 dylint_linting::dylint_library!();
 
