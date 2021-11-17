@@ -1,2 +1,11 @@
+[package]
+name = "test-lints"
+version = "0.1.0"
+publish = false
+edition = "2018"
+
 [workspace]
 members = ["./non_dynamic_errors"]
+
+[workspace.metadata.rust-analyzer]
+rustc_private = true
