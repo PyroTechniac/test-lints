@@ -17,14 +17,14 @@ declare_lint! {
     /// ```rust
     /// // example code that does not raise a warning
     /// ```
-    pub FILL_ME_IN,
+    pub NON_DYNAMIC_ERRORS,
     Warn,
     "description goes here"
 }
 
-declare_lint_pass!(FillMeIn => [FILL_ME_IN]);
+declare_lint_pass!(NonDynamicErrors => [NON_DYNAMIC_ERRORS]);
 
-impl<'hir> LateLintPass<'hir> for FillMeIn {
+impl<'hir> LateLintPass<'hir> for NonDynamicErrors {
     // A list of things you might check can be found here:
     // https://doc.rust-lang.org/stable/nightly-rustc/rustc_lint/trait.LateLintPass.html
 }
