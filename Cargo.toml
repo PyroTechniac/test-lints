@@ -1,5 +1,5 @@
 [workspace]
-members = ["./non_dynamic_errors"]
+members = ["./non_dynamic_errors", "./exposed_dependencies", "./foo"]
 
 [workspace.metadata.rust-analyzer]
 rustc_private = true

@@ -23,13 +23,13 @@ extern crate rustc_target;
 extern crate rustc_trait_selection;
 extern crate rustc_typeck;
 
-mod non_dynamic_errors;
+mod exposed_dependencies;
 
 #[doc(hidden)]
 #[no_mangle]
 pub fn register_lints(_sess: &rustc_session::Session, lint_store: &mut rustc_lint::LintStore) {
-    lint_store.register_lints(&[non_dynamic_errors::NON_DYNAMIC_ERRORS]);
-    lint_store.register_late_pass(|| Box::new(non_dynamic_errors::NonDynamicErrors));
+    lint_store.register_lints(&[exposed_dependencies::EXPOSED_DEPENDENCIES]);
+    lint_store.register_late_pass(|| Box::new(exposed_dependencies::ExposedDependencies::default()));
 }
 
 #[test]
